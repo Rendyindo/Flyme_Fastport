@@ -82,6 +82,13 @@ echo 'run_program("/sbin/rm/", "-rf", "/system");' >> $PWD/port/zip/META-INF/com
 echo 'mount("ext4", "EMMC", "/dev/block/platform/mtk-msdc.0/by-name/system", "/system", "");' >> $PWD/port/zip/META-INF/com/google/android/updater-script
 cat $PWD/porting/updater-script >> $PWD/port/zip/META-INF/com/google/android/updater-script
 
+echo -e "Please enter your boot block path.."
+read BOOTBLOCKPATH
+echo "- Using boot block path: $BOOTBLOCKPATH"
+echo 'package_extract_file("boot.img", "$BOOTBLOCKPATH");' >> $PWD/port/zip/META-INF/com/google/android/updater-script
+
+
+
 echo "- Zipping"
 cd port
 zip -q -y fullota.zip zip/*
