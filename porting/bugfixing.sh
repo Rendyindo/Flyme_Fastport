@@ -1,6 +1,14 @@
 #!/bin/sh
 # Bug fixing
 
+warning(){
+ echo "Usage:"
+ echo ". porting/bugfixing.sh [bug]"
+ echo ""
+ echo "Bug:"
+ echo "camera        : Blank camera fix"
+ echo "startingapp   : Stuck at 'Starting apps...'"
+}
 camerafix(){
  echo "- Copying lib files..."
  mv $PWD/base/zip/system/lib/libcam*.so $PWD/port/zip/system/lib
@@ -19,3 +27,7 @@ startingappfix(){
  rm -rf $PWD/port/zip/system/franework/framework-res
  rm -rf $PWD/base/zip/system/franework/framework-res
 }
+
+if [ "$1" = "" ]; then
+ warning
+fi
