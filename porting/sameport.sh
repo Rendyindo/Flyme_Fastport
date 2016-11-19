@@ -90,9 +90,9 @@ echo 'package_extract_file("boot.img", "$BOOTBLOCKPATH");' >> $PWD/port/zip/META
 
 
 echo "- Zipping"
-cd port
-zip -q -r -y fullota.zip zip/*
-cd ..
+cd port/zip
+zip -q -r -y fullota.zip *
+cd ../..
 mkdir out
 mv port/fullota.zip out/fullota.zip
 echo "- Done!"

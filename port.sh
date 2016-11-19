@@ -7,7 +7,7 @@
 ####################
 #######################################
 # Usage:
-# . port.sh --force -bn [base boot.img name] [pprt boot.img name]
+# . port.sh --force -bn [base boot.img name] [port boot.img name]
 # Setting up variables
 
 BASEZIP=$PWD/base/$(grep_setting base_zip_name)

@@ -1,7 +1,7 @@
 #!/bin/sh
 # Variable Setup
 # Usage:
-# . porting/envsetup.sh [-p [Product Codename] ]
+# . porting/envsetup.sh [-p [Product Codename] ] [ -c [Chipset] ]
 
 checkforhome(){
 if [ -f '$PWD/port.sh' ]; then
@@ -34,8 +34,19 @@ case $PORT_ANDROID_SDK in
  *) echo "Sorry, I didn't test for Android Kitkat and below"; exit;;
 esac
 
+export BASECHPST=$(grep_prop ro.product.board base)
+
+if [ "$2" = "-c" ]; then
+ export BASECHPST=$3
+fi
+
+if [ "$4" = "-c" ]; then
+ export BASECHPST=$4
+fi
+
 echo "PORT_HOME              = $PORT_HOME"
 echo "PORT_PRODUCT           = $PORT_PRODUCT"
 echo "PORT_ANDROID_SDK       = $PORT_ANDROID_SDK"
 echo "PORT_ANDROID_VERSION   = $PORT_ANDROID_VERSION"
+echo "BASECHPST              = $BASECHPST"
 exit
