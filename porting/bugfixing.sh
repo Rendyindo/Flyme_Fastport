@@ -20,12 +20,13 @@ startingappfix(){
  echo "- Decompiling port framework-res.apk..."
  . tool/apktool.sh d $PWD/port/zip/system/franework/framework-res.apk
  echo "- Replacing storage_list.xml
- mv port/zip/system/framework/framework-res/res/xml/storage_list.xml base/zip/system/framework/framework-res/res/xml/storage_list.xml
+ mv port/zip/system/framework/framework-res.out/res/xml/storage_list.xml base/zip/system/framework/framework-res.out/res/xml/storage_list.xml
  echo "- Building framework-res.apk..."
- . tool/apktool.sh b $PWD/port/zip/system/franework/framework-res
+ rm $PWD/port/zip/system/franework/framework-res.apk
+ . tool/apktool.sh b $PWD/port/zip/system/franework/framework-res.out -o $PWD/port/zip/system/franework/framework-res.apk
  echo "- Cleaning up"
- rm -rf $PWD/port/zip/system/franework/framework-res
- rm -rf $PWD/base/zip/system/franework/framework-res
+ rm -rf $PWD/port/zip/system/franework/framework-res.out
+ rm -rf $PWD/base/zip/system/franework/framework-res.out
 }
 
 if [ "$1" = "" ]; then

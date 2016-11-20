@@ -94,5 +94,5 @@ cd port/zip
 zip -q -r -y fullota.zip *
 cd ../..
 mkdir out
-mv port/fullota.zip out/fullota.zip
+mv port/zip/fullota.zip out/fullota.zip
 echo "- Done!"
