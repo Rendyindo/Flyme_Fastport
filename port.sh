@@ -8,11 +8,6 @@
 #######################################
 # Usage:
 # . port.sh --force -bn [base boot.img name] [port boot.img name]
-# Setting up variables
-
-BASEZIP=$PWD/base/$(grep_setting base_zip_name)
-PORTZIP=$PWD/port/$(grep_setting port_zip_name)
-
 
 # Setting up commands
 grep_prop() {
@@ -46,12 +41,12 @@ revert(){
 echo "Flyme OS Fastport"
 echo ""
 echo "- Checking files..."
-if [ ! -f '$PWD/base/*.zip' ]; then
+if [ ! -f '$BASEZIP' ]; then
  echo "Cannot find base zip file!"
  echo "Aborting..."
  exit
 fi
-if [ ! -f '$PWD/port/*.zip' ]; then
+if [ ! -f '$PORTZIP' ]; then
  echo "Cannot find port zip file!"
  echo "Aborting..."
  exit

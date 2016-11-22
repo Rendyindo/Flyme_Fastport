@@ -1,0 +1,9 @@
+# Setting file
+
+# This is a variable for setting up base zip file
+# Default value is: stockrom.zip
+basezip=stockrom.zip
+
+# Variable for setting up the port zip file
+# Default value: stockrom.zip
+portzip=stockrom.zip

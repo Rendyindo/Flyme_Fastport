@@ -16,6 +16,17 @@ if [ $2 = "-p" ]; then
  export PORT_PRODUCT=$3
 fi
 
+grep_setting() {
+  REGEX="s/^$1=//p"
+  shift
+  FILES=$@
+  if [ -z "$FILES" ]; then
+    FILES='$PWD/setting.prop'
+  fi
+  cat $FILES 2>/dev/null | sed -n $REGEX | head -n 1
+}
+
+
 grep_prop() {
   REGEX="s/^$1=//p"
   shift
@@ -36,6 +47,9 @@ esac
 
 export BASECHPST=$(grep_prop ro.product.board base)
 
+export BASEZIP=$(grep_setting basezip)
+export PORTZIP=$(grep_setting portzip)
+
 if [ "$2" = "-c" ]; then
  export BASECHPST=$3
 fi
@@ -49,4 +63,6 @@ echo "PORT_PRODUCT           = $PORT_PRODUCT"
 echo "PORT_ANDROID_SDK       = $PORT_ANDROID_SDK"
 echo "PORT_ANDROID_VERSION   = $PORT_ANDROID_VERSION"
 echo "BASECHPST              = $BASECHPST"
+echo "BASEZIP                = $BASEZIP"
+echo "PORTZIP                = $PORTZIP"
 exit
