@@ -1,30 +1,44 @@
 #!/bin/sh
-# Set up base zip
 
-echo "- Pulling boot image.."
-if [ -f "/dev/block/platform/*/*/by-name/boot" ]; then
- export BOOTPARTITION=$(readlink -f /dev/block/platform/*/*/by-name/boot)
-fi
+checkdevice(){
+ echo ">> Waiting for device"
+ DEVICE=$(adb devices)
+ if [ "$DEVICE" = "" ]; then
+ checkdevice
+ else
+ echo "<< Device detected"
+}
+
+echo ">> Mounting system partition"
+adb shell "mount -o remount,rw /system"
+echo "<< Mounting system partition"
+
+echo ""
+echo ">> Getting system files"
+adb pull /system system
+echo "<< Getting system files"
+
+echo ""
+echo ">>> Getting boot image"
+adb shell
+
 if [ -f "/dev/block/platform/*/by-name/boot" ]; then
- export BOOTPARTITION=$(readlink -f /dev/block/platform/*/*/by-name/boot)
-fi
-if [ "$BOOTPARTITION" = "" ]; then
- echo "Couldn't find Boot Partition!"
- echo "use 'export BOOTPARTITION=[partition path]' "
- echo "And then rerun this script!"
+BOOTPATH=$(ls /dev/block/platform/*/by-name/boot)
 fi
 
-adb pull $BOOTPARTITION $PORT_HOME/base/boot.img
+if [ -f "/dev/block/platform/*/*/by-name/boot" ]; then
+BOOTPATH=$(ls /dev/block/platform/*/*/by-name/boot)
+fi
+readlink -f $BOOTPATH > /sdcard/BOOTPATH
 
-echo "- Pulling system.."
+exit
 
-adb pull /system $PORT_HOME/base/system
+adb pull /sdcard/BOOTPATH BOOTPATH
+BOOTPATH=$(cat BOOTPATH)
 
-echo "- Zipping.."
-
-cd $PORT_HOME/base
-zip -q -r -y stockrom.zip *
-
-echo "- Done!"
-
-cd $PORT_HOME
+echo "Boot image path: $BOOTPATH"
+adb pull $BOOTPATH boot.img
+echo "<< Getting boot image"
+echo ">> Zipping system and boot"
+zip -q -r -y fullota.zip *
+echo "<< Zipping system and boot"
